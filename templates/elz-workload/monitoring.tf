@@ -202,7 +202,6 @@ module "workload_warning_topic" {
 
 #module "workload_alarms_critical" {
 #  source                           = "../../modules/alarms"
-#  count                            = var.workload_expansion_flag == true  ? 1 : 0
 #  compartment_id                   = module.workload_compartment.compartment_id
 #  notification_topic_id            = module.workload_critical_topic.topic_id
 #  is_enabled                       = local.workload_alarms.is_enabled

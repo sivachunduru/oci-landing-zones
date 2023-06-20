@@ -3,12 +3,16 @@ output "compartment" {
 }
 
 output "subnets" {
-  value = module.network.subnets
+  value       = module.network.subnets
   description = "The subnet OCID"
 }
 
 output "vcn" {
-  value = module.network.vcn
+  value = module.network.vcn_id
+}
+
+output "hub_vcn_cidr" {
+  value = var.vcn_cidr_block
 }
 
 output "hub_public_subnet_cidr" {
@@ -25,21 +29,6 @@ output "drg_id" {
 
 output "identity_domain" {
   value = module.identity.domain
-}
-
-output "workload_compartment_id" {
-  value = module.workload.compartment_id
-}
-
-output "workload_compartment_name" {
-  value = module.workload.compartment_name
-}
-
-output "workload_subnet_cidr_blocks" {
-  value = [var.private_spoke_subnet_app_cidr_block,
-           var.private_spoke_subnet_db_cidr_block,
-           var.private_spoke_subnet_web_cidr_block,
-  ]
 }
 
 output "stream_id" {
@@ -66,3 +55,6 @@ output "rpc_id" {
   value = module.network-extension.rpc_id
 }
 
+output "default_log_group_id" {
+  value = module.logging.log_group_id
+}

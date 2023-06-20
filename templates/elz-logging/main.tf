@@ -93,9 +93,6 @@ locals {
   subnets_map = {
     HUB1: var.subnets_map["OCI-ELZ-SUB-${var.environment_prefix}-HUB-${local.region_key[0]}001"]
     HUB2: var.subnets_map["OCI-ELZ-SUB-${var.environment_prefix}-HUB-${local.region_key[0]}002"]
-    SKP1: var.subnets_map["OCI-ELZ-SUB-${var.environment_prefix}-SPK-${local.region_key[0]}001"]
-    SKP2: var.subnets_map["OCI-ELZ-SUB-${var.environment_prefix}-SPK-${local.region_key[0]}002"]
-    SKP3: var.subnets_map["OCI-ELZ-SUB-${var.environment_prefix}-SPK-${local.region_key[0]}003"]
   }
 
   vcn_flow_log = {
@@ -287,4 +284,3 @@ module "event_log" {
   log_source_service  = local.event_log.log_source_service
   log_source_type     = local.event_log.log_source_type
 }
-

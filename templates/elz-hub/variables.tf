@@ -68,24 +68,24 @@ variable "private_subnet_cidr_block" {
   description = "Hub: Private Subnet CIDR Block."
 }
 
-variable "private_spoke_subnet_web_cidr_block" {
-  type        = string
-  description = "Spoke: Private Subnet Web CIDR Block."
-}
+# variable "private_spoke_subnet_web_cidr_block" {
+#   type        = string
+#   description = "Spoke: Private Subnet Web CIDR Block."
+# }
 
-variable "private_spoke_subnet_app_cidr_block" {
-  type        = string
-  description = "Spoke: Private Subnet App CIDR Block-1."
-}
+# variable "private_spoke_subnet_app_cidr_block" {
+#   type        = string
+#   description = "Spoke: Private Subnet App CIDR Block-1."
+# }
 
-variable "private_spoke_subnet_db_cidr_block" {
-  type        = string
-  description = "Spoke: Private Subnet DB CIDR Block-1."
-}
+# variable "private_spoke_subnet_db_cidr_block" {
+#   type        = string
+#   description = "Spoke: Private Subnet DB CIDR Block-1."
+# }
 
 variable "add_ssh_to_security_list" {
   type        = bool
-  description = "Add SSH tcpp port to Hub security list"
+  description = "Add SSH tcp port to Hub security list"
   default     = false
 }
 
@@ -119,5 +119,6 @@ variable "customer_onprem_ip_cidr" {
 variable "additional_workload_subnets_cidr_blocks" {
   type        = list(string)
   description = "A list of subnets cidr blocks in additional workload stack"
+  default     = []
 }
 

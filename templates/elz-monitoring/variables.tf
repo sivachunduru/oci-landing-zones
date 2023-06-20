@@ -36,10 +36,10 @@ variable "security_compartment_id" {
   type        = string
 }
 
-variable "workload_compartment_id" {
-  type        = string
-  #default     = ""
-}
+# variable "workload_compartment_id" {
+#   type        = string
+#   default     = ""
+# }
 
 variable "network_topic_endpoints" {
   type        = list(string)
@@ -97,31 +97,35 @@ variable "default_log_group_id" {
   type = string
 }
 
-variable "workload_topic_endpoints" {
-  type        = list(string)
-  default     = []
-  description = "List of email addresses for Workload notifications."
-  validation {
-    condition = length(
-      [for e in var.workload_topic_endpoints :
-      e if length(regexall("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", e)) > 0]
-    ) == length(var.workload_topic_endpoints)
-    error_message = "Validation failed: invalid email address."
-  }
-}
+# variable "workload_topic_endpoints" {
+#   type        = list(string)
+#   default     = []
+#   description = "List of email addresses for Workload notifications."
+#   validation {
+#     condition = length(
+#       [for e in var.workload_topic_endpoints :
+#       e if length(regexall("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", e)) > 0]
+#     ) == length(var.workload_topic_endpoints)
+#     error_message = "Validation failed: invalid email address."
+#   }
+# }
 
 variable "enable_security_monitoring_alarms" {
   type        = bool
   description = "Enable Security Monitoring Alarms in Security Compartment"
 }
+
 variable "enable_network_monitoring_alarms" {
   type        = bool
   description = "Enable Network Monitoring Alarms in Network Compartment"
 }
-variable "enable_workload_monitoring_alarms" {
-  type        = bool
-  description = "Enable Workload Monitoring Alarms in Workload Compartment"
-}
+
+# variable "enable_workload_monitoring_alarms" {
+#   type        = bool
+#   description = "Enable Workload Monitoring Alarms in Workload Compartment"
+#   default = false
+# }
+
 variable "is_create_alarms" {
   type        = bool
   description = "Enable Alarms Creation in all Compartment"

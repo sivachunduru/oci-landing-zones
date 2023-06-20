@@ -11,12 +11,12 @@ locals {
 
   spoke_route_rules_options = {
     route_rules_default = {
-      "spoke-public-subnet" = {
+      "hub-public-subnet" = {
         network_entity_id = var.drg_id
         destination       = var.hub_public_subnet_cidr_block
         destination_type  = "CIDR_BLOCK"
       }
-      "spoke-private-subnet" = {
+      "hub-private-subnet" = {
         network_entity_id = var.drg_id
         destination       = var.hub_private_subnet_cidr_block
         destination_type  = "CIDR_BLOCK"

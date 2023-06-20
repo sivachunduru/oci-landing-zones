@@ -36,11 +36,6 @@ module "identity" {
   iam_admin_group_name         = var.iam_admin_group_name
   platform_admin_group_name    = var.platform_admin_group_name
   ops_admin_group_name         = var.ops_admin_group_name
-  workload_admin_group_name    = var.workload_admin_group_name
-  application_admin_group_name = var.application_admin_group_name
-  database_admin_group_name    = var.database_admin_group_name
-  workload_compartment_id      = module.workload.compartment_id
-  workload_compartment_name    = module.workload.compartment_name
   workload_compartment_names   = var.workload_compartment_names
 
   providers = {
@@ -79,24 +74,21 @@ module "budget" {
 }
 
 module "security" {
-  source                               = "../elz-security"
-  enable_cloud_guard                   = var.enable_cloud_guard
-  resource_label                       = var.resource_label
-  home_compartment_id                  = var.home_compartment_id
-  cloud_guard_target_tenancy           = var.cloud_guard_target_tenancy
-  tenancy_ocid                         = var.tenancy_ocid
-  environment_prefix                   = var.environment_prefix
-  home_compartment_name                = var.home_compartment_name
-  region                               = var.region
-  environment_compartment_id           = module.compartment.compartments.environment.id
-  security_compartment_id              = module.compartment.compartments.security.id
-  enable_bastion                       = var.enable_bastion
-  bastion_target_subnet_id             = module.network.spoke_web_subnet_ocid
-  bastion_client_cidr_block_allow_list = var.bastion_client_cidr_block_allow_list
-  vault_type                           = var.vault_type
-  replica_region                       = var.vault_replica_region
-  enable_replication                   = var.enable_vault_replication
-  create_master_encryption_key         = var.create_master_encryption_key
+  source                       = "../elz-security"
+  enable_cloud_guard           = var.enable_cloud_guard
+  resource_label               = var.resource_label
+  home_compartment_id          = var.home_compartment_id
+  cloud_guard_target_tenancy   = var.cloud_guard_target_tenancy
+  tenancy_ocid                 = var.tenancy_ocid
+  environment_prefix           = var.environment_prefix
+  home_compartment_name        = var.home_compartment_name
+  region                       = var.region
+  environment_compartment_id   = module.compartment.compartments.environment.id
+  security_compartment_id      = module.compartment.compartments.security.id
+  vault_type                   = var.vault_type
+  replica_region               = var.vault_replica_region
+  enable_replication           = var.enable_vault_replication
+  create_master_encryption_key = var.create_master_encryption_key
 
   providers = {
     oci             = oci
@@ -112,38 +104,29 @@ locals {
 }
 
 module "network" {
-  source                 = "../elz-network"
-  tenancy_ocid           = var.tenancy_ocid
-  environment_prefix     = var.environment_prefix
-  region                 = var.region
-  network_compartment_id = module.compartment.compartments.network.id
-
-  enable_internet_gateway_hub  = var.enable_internet_gateway_hub
-  enable_nat_gateway_hub       = var.enable_nat_gateway_hub
-  enable_service_gateway_hub   = var.enable_service_gateway_hub
-  enable_nat_gateway_spoke     = var.enable_nat_gateway_spoke
-  enable_service_gateway_spoke = var.enable_service_gateway_spoke
-
-  igw_hub_check             = var.igw_hub_check
-  nat_gw_hub_check          = var.nat_gw_hub_check
-  service_gw_hub_check      = var.service_gw_hub_check
-  nat_gw_spoke_check        = var.nat_gw_spoke_check
-  service_gw_spoke_check    = var.service_gw_spoke_check
-  workload_compartment_id   = module.workload.compartment_id
-  workload_compartment_name = module.workload.compartment_name
-
-  vcn_cidr_block                      = var.vcn_cidr_block
-  public_subnet_cidr_block            = var.public_subnet_cidr_block
-  private_subnet_cidr_block           = var.private_subnet_cidr_block
-  private_spoke_subnet_web_cidr_block = var.private_spoke_subnet_web_cidr_block
-  private_spoke_subnet_app_cidr_block = var.private_spoke_subnet_app_cidr_block
-  private_spoke_subnet_db_cidr_block  = var.private_spoke_subnet_db_cidr_block
-  spoke_vcn_cidr                      = var.spoke_vcn_cidr
-  ipsec_connection_static_routes      = var.ipsec_connection_static_routes
-  enable_vpn_or_fastconnect           = var.enable_vpn_or_fastconnect
-  enable_vpn_on_environment           = var.enable_vpn_on_environment
-  enable_fastconnect_on_environment   = var.enable_fastconnect_on_environment
-  customer_onprem_ip_cidr             = var.customer_onprem_ip_cidr
+  source                      = "../elz-hub"
+  tenancy_ocid                = var.tenancy_ocid
+  region                      = var.region
+  environment_prefix          = var.environment_prefix
+  enable_internet_gateway_hub = var.enable_internet_gateway_hub
+  enable_nat_gateway_hub      = var.enable_nat_gateway_hub
+  enable_service_gateway_hub  = var.enable_service_gateway_hub
+  igw_hub_check               = var.igw_hub_check
+  nat_gw_hub_check            = var.nat_gw_hub_check
+  service_gw_hub_check        = var.service_gw_hub_check
+  network_compartment_id      = module.compartment.compartments.network.id
+  vcn_cidr_block              = var.vcn_cidr_block
+  public_subnet_cidr_block    = var.public_subnet_cidr_block
+  private_subnet_cidr_block   = var.private_subnet_cidr_block
+  # private_spoke_subnet_web_cidr_block = var.private_spoke_subnet_web_cidr_block
+  # private_spoke_subnet_app_cidr_block = var.private_spoke_subnet_app_cidr_block
+  # private_spoke_subnet_db_cidr_block  = var.private_spoke_subnet_db_cidr_block
+  add_ssh_to_security_list          = var.add_ssh_to_security_list
+  ipsec_connection_static_routes    = var.ipsec_connection_static_routes
+  enable_vpn_or_fastconnect         = var.enable_vpn_or_fastconnect
+  enable_vpn_on_environment         = var.enable_vpn_on_environment
+  enable_fastconnect_on_environment = var.enable_fastconnect_on_environment
+  customer_onprem_ip_cidr           = var.customer_onprem_ip_cidr
 
   additional_workload_subnets_cidr_blocks = var.additional_workload_subnets_cidr_blocks
 
@@ -183,7 +166,6 @@ module "monitoring" {
   environment_compartment_id = module.compartment.compartments.environment.id
   security_compartment_id    = module.compartment.compartments.security.id
   network_compartment_id     = module.compartment.compartments.network.id
-  workload_compartment_id    = module.workload.compartment_id
 
   is_create_alarms         = var.is_create_alarms
   network_topic_endpoints  = var.network_topic_endpoints
@@ -192,11 +174,8 @@ module "monitoring" {
   identity_topic_endpoints = var.identity_topic_endpoints
   default_log_group_id     = module.logging.log_group_id
 
-  workload_topic_endpoints = var.workload_topic_endpoints
-
   enable_security_monitoring_alarms = var.enable_security_monitoring_alarms
   enable_network_monitoring_alarms  = var.enable_network_monitoring_alarms
-  enable_workload_monitoring_alarms = var.enable_workload_monitoring_alarms
 
   providers = {
     oci             = oci

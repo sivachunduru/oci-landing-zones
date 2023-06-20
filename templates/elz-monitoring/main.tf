@@ -327,6 +327,7 @@ module "logging_analytics_audit" {
 ###########################################################################
 
 locals {
+/*
   workload_critical_topic = {
     topic_name            = "${var.environment_prefix}-Workload-Critical-${var.resource_label}"
     topic_description     = "OCI Landing Zone Critical Workload Topic"
@@ -337,7 +338,7 @@ locals {
     topic_description     = "OCI Landing Zone Warning Workload Topic"
     subscription_protocol = "EMAIL"
   }
-
+*/
   alarm_policy = {
     name        = "${var.environment_prefix}-Policy-${var.resource_label}"
     description = "OCI Alarm Policy"
@@ -500,6 +501,7 @@ locals {
       }
     }
   }
+  /*
   workload_alarms = {
     metric_compartment_id_in_subtree = false
     is_enabled                       = var.enable_workload_monitoring_alarms
@@ -630,6 +632,7 @@ locals {
       }
     }
   }
+  */
 }
 
 #module "workload_critical_topic" {

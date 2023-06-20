@@ -20,11 +20,13 @@ variable "resource_label" {
   type        = string
   description = "Prefix used to avoid naming conflict"
 }
+
 variable "workload_compartment_names" {
   type        = list(string)
   default     = []
   description = "The names of the workload compartments to update policies for the Admin Groups"
 }
+
 # -----------------------------------------------------------------------------
 # Compartment Variables
 # -----------------------------------------------------------------------------
@@ -38,7 +40,6 @@ variable "home_compartment_id" {
   type        = string
   description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
 }
-#home_compartment_name
 
 variable "home_compartment_name" {
   type        = string
@@ -101,23 +102,6 @@ variable "ops_admin_group_name" {
   description = "The group name for the OCI Landing Zone Ops Administrators Group"
 }
 
-variable "workload_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Workload Administrators Group"
-}
-
-variable "application_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Application Administrators Group"
-}
-
-variable "database_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Database Logging Administrators Group"
-}
 variable "domain_license_type" {
   type        = string
   description = "Identity Domain License Type"
@@ -167,36 +151,6 @@ variable "cloud_guard_target_tenancy" {
   description = "true if cloud guard targets to tenancy, false if cloud guard targets to Landing Zone home compartment"
 }
 
-# -----------------------------------------------------------------------------
-# Tagging Variables
-# -----------------------------------------------------------------------------
-
-variable "enable_tagging" {
-  type        = bool
-  description = "Set to true to enable Tagging."
-  default     = false
-}
-
-variable "cost_center_tagging" {
-  type        = string
-  description = "Cost Center Varible"
-}
-
-variable "geo_location_tagging" {
-  type        = string
-  description = "Geo Location."
-}
-
-variable "enable_bastion" {
-  type        = bool
-  description = "Option to enable bastion service"
-}
-
-variable "bastion_client_cidr_block_allow_list" {
-  type        = list(string)
-  description = "A list of address ranges in CIDR notation that you want to allow to connect to sessions hosted by this bastion."
-}
-
 variable "vault_type" {
   type        = string
   description = "The type of vault to create. "
@@ -218,6 +172,26 @@ variable "create_master_encryption_key" {
 }
 
 # -----------------------------------------------------------------------------
+# Tagging Variables
+# -----------------------------------------------------------------------------
+
+variable "enable_tagging" {
+  type        = bool
+  description = "Set to true to enable Tagging."
+  default     = false
+}
+
+variable "cost_center_tagging" {
+  type        = string
+  description = "Cost Center Varible"
+}
+
+variable "geo_location_tagging" {
+  type        = string
+  description = "Geo Location."
+}
+
+# -----------------------------------------------------------------------------
 # Network Variables
 # -----------------------------------------------------------------------------
 
@@ -235,16 +209,6 @@ variable "enable_service_gateway_hub" {
   description = "Option to enable true and Disable false."
 }
 
-variable "enable_nat_gateway_spoke" {
-  type        = string
-  description = "Option to enable true and Disable false."
-}
-
-variable "enable_service_gateway_spoke" {
-  type        = string
-  description = "Option to enable true and Disable false."
-}
-
 variable "igw_hub_check" {
   type = list(string)
 }
@@ -252,14 +216,6 @@ variable "nat_gw_hub_check" {
   type = list(string)
 }
 variable "service_gw_hub_check" {
-  type = list(string)
-}
-
-variable "nat_gw_spoke_check" {
-  type = list(string)
-}
-
-variable "service_gw_spoke_check" {
   type = list(string)
 }
 
@@ -278,22 +234,24 @@ variable "private_subnet_cidr_block" {
   description = "Hub Private Subnet CIDR Block."
 }
 
-variable "private_spoke_subnet_web_cidr_block" {
-  type        = string
-  description = "Spoke Web Subnet CIDR Block."
+variable "add_ssh_to_security_list" {
+  type        = bool
+  description = "Add SSH tcp port to Hub security list"
+  default     = false
 }
-variable "private_spoke_subnet_app_cidr_block" {
-  type        = string
-  description = "Spoke App Subnet CIDR Block."
-}
-variable "private_spoke_subnet_db_cidr_block" {
-  type        = string
-  description = "Spoke DB Subnet CIDR Block."
-}
-variable "spoke_vcn_cidr" {
-  type        = string
-  description = "Spoke VCN CIDR Block."
-}
+
+# variable "private_spoke_subnet_web_cidr_block" {
+#   type        = string
+#   description = "Spoke Web Subnet CIDR Block."
+# }
+# variable "private_spoke_subnet_app_cidr_block" {
+#   type        = string
+#   description = "Spoke App Subnet CIDR Block."
+# }
+# variable "private_spoke_subnet_db_cidr_block" {
+#   type        = string
+#   description = "Spoke DB Subnet CIDR Block."
+# }
 
 # -----------------------------------------------------------------------------
 # Monitoring Variables
@@ -350,18 +308,6 @@ variable "identity_topic_endpoints" {
   }
 }
 
-variable "workload_topic_endpoints" {
-  type        = list(string)
-  default     = []
-  description = "List of email addresses for Workload notifications."
-  validation {
-    condition = length(
-      [for e in var.workload_topic_endpoints :
-      e if length(regexall("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", e)) > 0]
-    ) == length(var.workload_topic_endpoints)
-    error_message = "Validation failed: invalid email address."
-  }
-}
 variable "is_create_alarms" {
   type        = bool
   description = "Enable Alarms Creation in all Compartment"
@@ -373,10 +319,6 @@ variable "enable_security_monitoring_alarms" {
 variable "enable_network_monitoring_alarms" {
   type        = bool
   description = "Enable Network Monitoring Alarms in Network Compartment"
-}
-variable "enable_workload_monitoring_alarms" {
-  type        = bool
-  description = "Enable Workload Monitoring Alarms in Workload Compartment"
 }
 
 # -----------------------------------------------------------------------------

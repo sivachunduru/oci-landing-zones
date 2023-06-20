@@ -59,9 +59,10 @@ variable "security_compartment_name" {
   type = string
 }
 variable "workload_compartment_id" {
-  type = string
-
+  type    = string
+  default = ""
 }
+
 variable "workload_compartment_names" {
   type        = list(string)
   default     = []
@@ -101,29 +102,29 @@ variable "ops_admin_group_name" {
   description = "The group name for the OCI Landing Zone Ops Administrators Group"
 }
 
-variable "workload_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Workload Administrators Group"
-}
+# variable "workload_admin_group_name" {
+#   type        = string
+#   default     = ""
+#   description = "The group name for the OCI Workload Administrators Group"
+# }
 
-variable "application_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Application Administrators Group"
-}
+# variable "application_admin_group_name" {
+#   type        = string
+#   default     = ""
+#   description = "The group name for the OCI Application Administrators Group"
+# }
 
-variable "database_admin_group_name" {
-  type        = string
-  default     = ""
-  description = "The group name for the OCI Database Logging Administrators Group"
-}
+# variable "database_admin_group_name" {
+#   type        = string
+#   default     = ""
+#   description = "The group name for the OCI Database Logging Administrators Group"
+# }
 
-variable "workload_compartment_name" {
-  type        = string
-  description = "The name of the workload compartment by default OCI-ELZ-<Workload Name>-<Region>."
-  default     = ""
-}
+# variable "workload_compartment_name" {
+#   type        = string
+#   description = "The name of the workload compartment by default OCI-ELZ-<Workload Name>-<Region>."
+#   default     = ""
+# }
 variable "domain_license_type" {
   type        = string
   description = "Identity Domain License Type"

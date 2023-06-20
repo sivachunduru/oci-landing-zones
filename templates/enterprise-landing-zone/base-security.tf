@@ -75,15 +75,7 @@ locals {
 
     general_matching_rule = <<EOT
     Any {
-      instance.compartment.id = '${module.prod_environment.compartment.security.id}',
-      instance.compartment.id = '${module.prod_environment.compartment.network.id}',
-      instance.compartment.id = '${module.prod_environment.workload_compartment_id}',
-      instance.compartment.id = '${module.nonprod_environment.compartment.security.id}',
-      instance.compartment.id = '${module.nonprod_environment.compartment.network.id}',
-      instance.compartment.id = '${module.nonprod_environment.workload_compartment_id}',
-      instance.compartment.id = '${module.prod_environment.compartment.logging.id}',
-      instance.compartment.id = '${module.nonprod_environment.compartment.logging.id}',
-      instance.compartment.id = '${module.home_compartment.compartment_id}'
+      instance.compartment.id  = '${module.home_compartment.compartment_id}'
     }
     EOT
   }
@@ -109,7 +101,8 @@ locals {
 }
 
 module "cloud_guard_root_policy" {
-  count            = var.enable_cloud_guard   ? 1 : 0
+  count = var.enable_cloud_guard ? 1 : 0
+
   source           = "../../modules/policies"
   compartment_ocid = var.tenancy_ocid
   policy_name      = local.cloud_guard_policy.name
@@ -118,7 +111,8 @@ module "cloud_guard_root_policy" {
 }
 
 module "cloud_guard_target_policy" {
-  count            = var.enable_cloud_guard   ? 1 : 0
+  count = var.enable_cloud_guard ? 1 : 0
+
   source           = "../../modules/policies"
   compartment_ocid = var.cloud_guard_target_tenancy ? var.tenancy_ocid : module.home_compartment.compartment_id
   policy_name      = local.cloud_guard_target_policy.name
@@ -155,7 +149,7 @@ module "osms_dynamic_group" {
   name          = local.osms_dynamic_group.dynamic_group_name
   matching_rule = local.osms_dynamic_group.general_matching_rule
 
-  depends_on = [module.prod_environment, module.nonprod_environment, module.home_compartment]
+  depends_on = [module.home_compartment]
 }
 
 module "osms_policy" {

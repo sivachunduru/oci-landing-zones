@@ -15,4 +15,3 @@ data "oci_identity_region_subscriptions" "regions" {
 data "oci_objectstorage_namespace" "ns" {
   compartment_id = var.tenancy_ocid
 }
-

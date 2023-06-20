@@ -14,28 +14,28 @@ locals {
 
   additional_workload_subnets_cidr_blocks = var.additional_workload_subnets_cidr_blocks != [] ? var.additional_workload_subnets_cidr_blocks : []
 
-  igw_hub_check                  = var.enable_internet_gateway_hub ? var.igw_hub_check : []
-  nat_gw_hub_check               = var.enable_nat_gateway_hub ? var.nat_gw_hub_check : []
-  service_gw_hub_check           = var.enable_service_gateway_hub ? var.service_gw_hub_check : []
+  igw_hub_check        = var.enable_internet_gateway_hub ? var.igw_hub_check : []
+  nat_gw_hub_check     = var.enable_nat_gateway_hub ? var.nat_gw_hub_check : []
+  service_gw_hub_check = var.enable_service_gateway_hub ? var.service_gw_hub_check : []
 
   hub_public_route_rules_options = {
-    route_rules_default = {
-      "hub-to-web-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_web_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-      "hub-to-app-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_app_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-      "hub-to-db-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_db_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-    }
+    # route_rules_default = {
+    #   "hub-to-web-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_web_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    #   "hub-to-app-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_app_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    #   "hub-to-db-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_db_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    # }
     route_rules_igw = {
       for index, route in local.igw_hub_check : "igw-rule-${index}" => {
         network_entity_id = module.hub_internet_gateway[0].internet_gw_id
@@ -68,27 +68,28 @@ locals {
 
   hub_public_route_rules = {
     route_table_display_name = "OCI-ELZ-RTPUB-${var.environment_prefix}-HUB001"
-    route_rules              = merge(local.hub_public_route_rules_options.route_rules_default, local.hub_public_route_rules_options.route_rules_igw, local.hub_public_route_rules_options.route_rules_vpn, local.hub_public_route_rules_options.route_rules_fastconnect, local.hub_public_route_rules_options.route_rules_workload)
+    route_rules              = merge(local.hub_public_route_rules_options.route_rules_igw, local.hub_public_route_rules_options.route_rules_vpn, local.hub_public_route_rules_options.route_rules_fastconnect, local.hub_public_route_rules_options.route_rules_workload)
+    # route_rules              = merge(local.hub_public_route_rules_options.route_rules_default, local.hub_public_route_rules_options.route_rules_igw, local.hub_public_route_rules_options.route_rules_vpn, local.hub_public_route_rules_options.route_rules_fastconnect, local.hub_public_route_rules_options.route_rules_workload)
   }
 
   hub_private_route_rules_options = {
-    route_rules_default = {
-      "pri-hub-to-web-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_web_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-      "pri-hub-to-app-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_app_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-      "pri-hub-to-db-traffic" = {
-        network_entity_id = module.drg.drg_id
-        destination       = var.private_spoke_subnet_db_cidr_block
-        destination_type  = "CIDR_BLOCK"
-      }
-    }
+    # route_rules_default = {
+    #   "pri-hub-to-web-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_web_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    #   "pri-hub-to-app-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_app_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    #   "pri-hub-to-db-traffic" = {
+    #     network_entity_id = module.drg.drg_id
+    #     destination       = var.private_spoke_subnet_db_cidr_block
+    #     destination_type  = "CIDR_BLOCK"
+    #   }
+    # }
     route_rules_nat = {
       for index, route in local.nat_gw_hub_check : "nat-gw-rule-${index}" => {
         network_entity_id = module.nat-gateway-hub[0].nat_gw_id
@@ -128,11 +129,12 @@ locals {
 
   hub_private_route_rules = {
     route_table_display_name = "OCI-ELZ-RTPRV-${var.environment_prefix}-HUB002"
-    route_rules              = merge(local.hub_private_route_rules_options.route_rules_default,local.hub_private_route_rules_options.route_rules_nat,local.hub_private_route_rules_options.route_rules_srvc_gw, local.hub_private_route_rules_options.route_rules_vpn, local.hub_private_route_rules_options.route_rules_fastconnect, local.hub_private_route_rules_options.route_rules_workload)
+    route_rules              = merge(local.hub_private_route_rules_options.route_rules_nat, local.hub_private_route_rules_options.route_rules_srvc_gw, local.hub_private_route_rules_options.route_rules_vpn, local.hub_private_route_rules_options.route_rules_fastconnect, local.hub_private_route_rules_options.route_rules_workload)
+    # route_rules              = merge(local.hub_private_route_rules_options.route_rules_default, local.hub_private_route_rules_options.route_rules_nat, local.hub_private_route_rules_options.route_rules_srvc_gw, local.hub_private_route_rules_options.route_rules_vpn, local.hub_private_route_rules_options.route_rules_fastconnect, local.hub_private_route_rules_options.route_rules_workload)
   }
 
   list_info = {
-    hub_display_name   = "OCI-ELZ-${var.environment_prefix}-Hub-Security-List"
+    hub_display_name = "OCI-ELZ-${var.environment_prefix}-Hub-Security-List"
   }
 
   ip_protocols = {
@@ -288,7 +290,7 @@ resource "oci_core_route_table" "hub_public_route_table" {
 module "hub_internet_gateway" {
   source = "../../modules/internet-gateway"
 
-  count                         = var.enable_internet_gateway_hub == "true"  ? 1 : 0
+  count                         = var.enable_internet_gateway_hub == "true" ? 1 : 0
   network_compartment_id        = var.network_compartment_id
   vcn_id                        = local.hub_internet_gateway.vcn_id
   internet_gateway_display_name = local.hub_internet_gateway.internet_gateway_display_name
@@ -297,16 +299,16 @@ module "hub_internet_gateway" {
 module "nat-gateway-hub" {
   source = "../../modules/nat-gateway"
 
-  count                    = var.enable_nat_gateway_hub == "true"  ? 1 : 0
+  count                    = var.enable_nat_gateway_hub == "true" ? 1 : 0
   network_compartment_id   = var.network_compartment_id
   vcn_id                   = local.hub_nat_gateway.vcn_id
   nat_gateway_display_name = local.hub_nat_gateway.nat_gateway_display_name
 }
 
 module "service-gateway-hub" {
-  source                       = "../../modules/service-gateway"
+  source = "../../modules/service-gateway"
 
-  count                        = var.enable_service_gateway_hub == "true"  ? 1 : 0
+  count                        = var.enable_service_gateway_hub == "true" ? 1 : 0
   network_compartment_id       = var.network_compartment_id
   vcn_id                       = local.service_gateway_hub.vcn_id
   service_gateway_display_name = local.service_gateway_hub.service_gateway_display_name
