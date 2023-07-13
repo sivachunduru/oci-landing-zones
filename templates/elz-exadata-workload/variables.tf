@@ -34,6 +34,11 @@ variable "enable_fan_events" {
   default     = true
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+  default     = false
+}
 # -----------------------------------------------------------------------------
 # IAM Variables
 # -----------------------------------------------------------------------------
@@ -142,14 +147,9 @@ variable "security_admin_group_name" {
   default     = ""
 }
 
-variable "identity_domain_id" {
+variable "identity_domain_url" {
   type        = string
-  description = "the ocid of identity domain"
-  default     = "ocid1.domain."
-  validation {
-    condition     = can(regex("^domain$", split(".", var.identity_domain_id)[1]))
-    error_message = "Only Domain OCID is allowed."
-  }
+  description = "the url of identity domain"
 }
 
 variable "identity_domain_name" {

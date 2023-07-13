@@ -1,4 +1,3 @@
-
 locals {
   architecture_tag = {
     tag_namespace_description = "ArchitectureCenterTagNamespace"
@@ -30,6 +29,7 @@ resource "random_id" "tag" {
 }
 
 module "architecture_tag" {
+  count                     = var.is_baseline_deploy ? 0 : 1
   source                    = "../../modules/tag"
   compartment_id            = var.tenancy_ocid
   tag_namespace_description = local.architecture_tag.tag_namespace_description

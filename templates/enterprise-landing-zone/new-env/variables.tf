@@ -42,6 +42,17 @@ variable "newenv_ops_admin_group_name" {
   description = "The group name for the OCI Landing Zone Ops Administrators Group. Defaults to OCI-ELZ-UGP-P-OPS-ADMIN if blank or not provided."
 }
 
+variable "newenv_enable_shared_tools" {
+  type        = bool
+  description = "Set to true to enable a management tools compartment which hosts few of the tools that are used to manage workloads across the environments."
+  default     = false
+}
+
+variable "newenv_enable_dmz" {
+  type        = bool
+  description = "Set to true to enable a compartment to host DMZ related services."
+  default     = false
+}
 # -----------------------------------------------------------------------------
 # Security Variables
 # -----------------------------------------------------------------------------

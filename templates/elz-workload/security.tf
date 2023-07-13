@@ -29,7 +29,7 @@ module "osms_dynamic_group" {
 module "bastion" {
   source                               = "../../modules/bastion"
   count                                = var.enable_bastion ? 1 : 0
-  target_subnet_id                     = module.workload_expansion_spoke.subnets["OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-WEB"]
+  target_subnet_id                     = module.workload_expansion_spoke.subnets[local.workload_private_spoke_subnet_web_display_name]
   bastion_client_cidr_block_allow_list = var.bastion_client_cidr_block_allow_list
   bastion_name                         = local.bastion.name
   compartment_id                       = var.security_compartment_id

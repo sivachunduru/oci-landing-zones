@@ -21,6 +21,16 @@ variable "resource_label" {
   description = "A prefix used to avoid naming conflicts if multiple Landing Zones are deployed."
 }
 
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+  default     = false
+}
 # -----------------------------------------------------------------------------
 # Compartment Variables
 # -----------------------------------------------------------------------------
@@ -154,20 +164,25 @@ variable "environment_compartment_name" {
   default     = ""
 }
 
-variable "identity_domain_id" {
-  type        = string
-  description = "the ocid of identity domain"
-  default     = "ocid1.domain."
-  validation {
-    condition     = can(regex("^domain$", split(".", var.identity_domain_id)[1]))
-    error_message = "Only Domain are OCID is allowed."
-  }
-}
+# variable "identity_domain_id" {
+#   type        = string
+#   description = "the ocid of identity domain"
+#   default     = "ocid1.domain."
+#   validation {
+#     condition     = can(regex("^domain$", split(".", var.identity_domain_id)[1]))
+#     error_message = "Only Domain are OCID is allowed."
+#   }
+# }
 
 variable "identity_domain_name" {
   type        = string
   description = "identity domain name"
   default     = ""
+}
+
+variable "identity_domain_url" {
+  type        = string
+  description = "identity domain url"
 }
 
 variable "workload_admin_group_name" {

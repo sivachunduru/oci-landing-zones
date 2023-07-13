@@ -14,6 +14,16 @@ variable "environment_prefix" {
   description = ""
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
+
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
 variable "enable_vpn_or_fastconnect" {
   type        = string
   description = "Option to enable VPN or FASTCONNECT service. Options are NONE, VPN, FASTCONNECT."
@@ -154,9 +164,9 @@ variable "remote_peering_connection_peer_region_name" {
 }
 
 variable "drg_route_table_rpc_id" {
-  type    = string
+  type = string
 }
 
 variable "drg_route_table_vc_id" {
-  type    = string
+  type = string
 }

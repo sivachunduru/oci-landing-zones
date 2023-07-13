@@ -4,6 +4,9 @@ module "workload_expansion_spoke" {
   environment_prefix = var.environment_prefix
   tenancy_ocid       = var.tenancy_ocid
   region             = var.region
+  is_baseline_deploy = var.is_baseline_deploy
+
+  home_compartment_id = var.home_compartment_id
   #Spoke VCN Variables
   workload_spoke_vcn_cidr = var.workload_spoke_vcn_cidr
   vcn_dns_label           = var.vcn_dns_label

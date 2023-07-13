@@ -22,6 +22,16 @@ locals {
     description = "Security Compartment"
   }
 
+  shared_tools_compartment = {
+    name        = "OCI-ELZ-${var.environment_prefix}-SRD-TOOLS"
+    description = "Shared Tools Compartment"
+  }
+
+  dmz_compartment = {
+    name        = "OCI-ELZ-${var.environment_prefix}-SRD-DMZ"
+    description = "DMZ Compartment"
+  }
+
   logging_compartment = {
     name        = "OCI-ELZ-${var.environment_prefix}-LOG-${local.region_key[0]}"
     description = "Logging Compartment"
@@ -40,7 +50,7 @@ module "environment_compartment" {
   compartment_name          = local.environment_compartment.name
   compartment_description   = local.environment_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
-  
+
   providers = {
     oci = oci.home_region
   }
@@ -52,6 +62,34 @@ module "shared_infra_compartment" {
   compartment_parent_id     = module.environment_compartment.compartment_id
   compartment_name          = local.shared_infra_compartment.name
   compartment_description   = local.shared_infra_compartment.description
+  enable_compartment_delete = var.enable_compartment_delete
+
+  providers = {
+    oci = oci.home_region
+  }
+}
+
+module "shared_tools_compartment" {
+  count  = var.enable_shared_tools ? 1 : 0
+  source = "../../modules/compartment"
+
+  compartment_parent_id     = module.shared_infra_compartment.compartment_id
+  compartment_name          = local.shared_tools_compartment.name
+  compartment_description   = local.shared_tools_compartment.description
+  enable_compartment_delete = var.enable_compartment_delete
+
+  providers = {
+    oci = oci.home_region
+  }
+}
+
+module "dmz_compartment" {
+  count  = var.enable_dmz ? 1 : 0
+  source = "../../modules/compartment"
+
+  compartment_parent_id     = module.shared_infra_compartment.compartment_id
+  compartment_name          = local.dmz_compartment.name
+  compartment_description   = local.dmz_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
 
   providers = {

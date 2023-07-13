@@ -1,6 +1,6 @@
 locals {
   newenv_service_connector_policy = {
-    name        = "${var.resource_label}-OCI-ELZ-P-SC-Policy"
+    name        = "${var.resource_label}-OCI-ELZ-environmentprefix-SC-Policy"
     description = "OCI ELZ Service Connector Policy - newenv"
     statements = [
       "Allow any-user to {STREAM_READ, STREAM_CONSUME} in compartment id ${module.newenv_environment.compartment.security.id} where all {request.principal.type='serviceconnector', target.stream.id='${module.newenv_environment.stream_id}', request.principal.compartment.id='${module.newenv_environment.compartment.security.id}'}",
@@ -10,7 +10,7 @@ locals {
   }
 
   newenv_archive_log_bucket = {
-    name                                = "${var.resource_label}_logs_archive"
+    name                                = "${var.resource_label}_environmentprefix_logs_archive"
     description                         = "Archive Log bucket"
     retention_rule_display_name         = "archive log bucket retention rule"
     retention_policy_duration_amount    = var.archive_log_retention_policy_duration_amount
@@ -19,12 +19,12 @@ locals {
   }
 
   newenv_key_archive_policy = {
-    name        = "${var.resource_label}-OCI-ELZ-P-KEY-ARC-Policy"
+    name        = "${var.resource_label}-OCI-ELZ-environmentprefix-KEY-ARC-Policy"
     description = "OCI Enterprise Landing Zone Key Policy For Archive - newenv"
 
     statements = [
       "Allow service objectstorage-${var.region} to use keys in compartment id ${module.newenv_environment.compartment.security.id}",
-      "Allow service blockstorage,FssOc1newenv, OKE, streaming to use keys in compartment id ${module.newenv_environment.compartment.security.id}"
+      "Allow service blockstorage,FssOc1Prod, OKE, streaming to use keys in compartment id ${module.newenv_environment.compartment.security.id}"
     ]
   }
 

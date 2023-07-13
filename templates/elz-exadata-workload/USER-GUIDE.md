@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 ## Introduction
 
-This is a workload expansion template to deploy Exadata workload on top of Enterprise Landing Zone (ELZ). This template uses *elz-exadata=spoke* template in addition to other base templates.
+This is a workload expansion template to deploy Exadata workload on top of Enterprise Landing Zone (ELZ). This template uses *elz-exadata-spoke* template in addition to other base templates.
 
 ## Pre-requisites
 
@@ -13,7 +13,7 @@ The below information has to be captured out of Enterprise Landing Zone setup to
 | resource_label | Capture the same value used during ELZ setup |
 | environment_prefix | The prefix of the environment where Exadata template is deployed |
 | environment_compartment_id | The OCID of the environment where Exadata template is deployed |
-| identity_domain_id | The OCID of the Environment specific Identity Domain |
+| identity_domain_url | The URL of the Environment specific Identity Domain |
 | network_compartment_id | The OCID of the network compartment of the required environment |
 | security_compartment_id | The OCID of the security compartment of the required environment |
 | drg_id | The OCID of the DRG of the required environment |
@@ -23,7 +23,7 @@ The below information has to be captured out of Enterprise Landing Zone setup to
 | hub_private_subnet_cidr_block | The CIDR block range of Private Subnet in the Hub VCN of the required environment |
 | default_log_group_id | The OCID of the defaullt log group of the required environment |
 
-In addition to the above ELZ specific parameters, the values for the below workload specific parameters to be captured.
+In addition to the above ELZ specific parameters, the values for the below workload specific parameters are to be captured.
 
 | Name | Description |
 |------|---------|
@@ -93,4 +93,3 @@ workload_private_spoke_subnet_backup_display_name*
 ## Installation
 
 By substituting the above parameters, one can chose the option of running the template in Oracle Resource Manager or in a local terminal.
-

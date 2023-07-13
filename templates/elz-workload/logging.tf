@@ -8,12 +8,15 @@ locals {
     log_source_type     = "OCISERVICE"
   }
 
-  subnets_map = {
-    SPK1 : module.workload_expansion_spoke.subnets["OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-WEB"]
-    SPK2 : module.workload_expansion_spoke.subnets["OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-APP"]
-    SPK3 : module.workload_expansion_spoke.subnets["OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-DB"]
-  }
+  workload_private_spoke_subnet_web_display_name = var.workload_private_spoke_subnet_web_display_name != "" ? var.workload_private_spoke_subnet_web_display_name : "OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-WEB"
+  workload_private_spoke_subnet_app_display_name = var.workload_private_spoke_subnet_app_display_name != "" ? var.workload_private_spoke_subnet_app_display_name : "OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-APP"
+  workload_private_spoke_subnet_db_display_name  = var.workload_private_spoke_subnet_db_display_name != "" ? var.workload_private_spoke_subnet_db_display_name : "OCI-ELZ-${var.workload_prefix}-EXP-SPK-SUB-${local.region_key[0]}-DB"
 
+  subnets_map = {
+    SPK1 : module.workload_expansion_spoke.subnets[local.workload_private_spoke_subnet_web_display_name]
+    SPK2 : module.workload_expansion_spoke.subnets[local.workload_private_spoke_subnet_app_display_name]
+    SPK3 : module.workload_expansion_spoke.subnets[local.workload_private_spoke_subnet_db_display_name]
+  }
 }
 
 module "vcn_flow_log" {

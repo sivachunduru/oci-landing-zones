@@ -16,6 +16,15 @@ variable "environment_prefix" {
   description = "the 1 character string representing the environment eg. P (prod), N (non-prod), D, T, U"
 }
 
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
 # -----------------------------------------------------------------------------
 # Network Variables
 # -----------------------------------------------------------------------------
@@ -67,21 +76,6 @@ variable "private_subnet_cidr_block" {
   type        = string
   description = "Hub: Private Subnet CIDR Block."
 }
-
-# variable "private_spoke_subnet_web_cidr_block" {
-#   type        = string
-#   description = "Spoke: Private Subnet Web CIDR Block."
-# }
-
-# variable "private_spoke_subnet_app_cidr_block" {
-#   type        = string
-#   description = "Spoke: Private Subnet App CIDR Block-1."
-# }
-
-# variable "private_spoke_subnet_db_cidr_block" {
-#   type        = string
-#   description = "Spoke: Private Subnet DB CIDR Block-1."
-# }
 
 variable "add_ssh_to_security_list" {
   type        = bool

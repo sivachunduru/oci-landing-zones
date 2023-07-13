@@ -8,6 +8,7 @@ api_private_key_path = ""
 # iam
 resource_label            = ""
 enable_compartment_delete = true
+is_baseline_deploy        = true
 domain_license_type       = "free"
 
 # logging

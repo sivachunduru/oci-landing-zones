@@ -3,10 +3,12 @@
 # iam
 newenv_environment_prefix = "environmentprefix"
 newenv_domain_admin_email = "noreply@oracle.com"
+# newenv_enable_shared_tools = false
+# newenv_enable_dmz          = false
 
 # budget
 newenv_enable_budget = false
-# newenv_budget_alert_rule_message    = "[environmentprefix] budget 70% alert."
+# newenv_budget_alert_rule_message    = "[PRD] budget 70% alert."
 # newenv_budget_alert_rule_threshold  = 7000
 # newenv_budget_amount                = 10000
 # newenv_budget_alert_rule_recipients = ""

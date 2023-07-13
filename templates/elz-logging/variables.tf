@@ -8,6 +8,11 @@ variable "environment_prefix" {
   description = "the 1 character string representing the environment eg. P (prod), N (non-prod), D, T, U"
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
+
 variable "security_compartment_id" {
   type        = string
   description = " The ocid of the security compartment."

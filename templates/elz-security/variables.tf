@@ -13,6 +13,11 @@ variable "resource_label" {
   description = "Prefix used to avoid naming conflict"
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
+
 variable "enable_cloud_guard" {
   type        = bool
   description = "true if you don't have cloud guard enabled, false if you've already have cloud guard enabled."

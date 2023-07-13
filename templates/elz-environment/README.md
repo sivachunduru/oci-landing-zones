@@ -4,18 +4,20 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_oci"></a> [oci](#requirement\_oci) | 4.122.0 |
+| <a name="requirement_oci"></a> [oci](#requirement\_oci) | 5.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_oci"></a> [oci](#provider\_oci) | 4.122.0 |
+| <a name="provider_oci"></a> [oci](#provider\_oci) | 5.1.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_architecture_tag"></a> [architecture\_tag](#module\_architecture\_tag) | ../../modules/tag | n/a |
 | <a name="module_budget"></a> [budget](#module\_budget) | ../elz-budget | n/a |
 | <a name="module_compartment"></a> [compartment](#module\_compartment) | ../elz-compartment | n/a |
 | <a name="module_identity"></a> [identity](#module\_identity) | ../elz-identity | n/a |
@@ -30,7 +32,8 @@
 
 | Name | Type |
 |------|------|
-| [oci_identity_region_subscriptions.regions](https://registry.terraform.io/providers/oracle/oci/4.122.0/docs/data-sources/identity_region_subscriptions) | data source |
+| [random_id.tag](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [oci_identity_region_subscriptions.regions](https://registry.terraform.io/providers/oracle/oci/5.1.0/docs/data-sources/identity_region_subscriptions) | data source |
 
 ## Inputs
 
@@ -60,6 +63,7 @@
 | <a name="input_enable_budget"></a> [enable\_budget](#input\_enable\_budget) | ----------------------------------------------------------------------------- Budget Variables ----------------------------------------------------------------------------- | `bool` | n/a | yes |
 | <a name="input_enable_cloud_guard"></a> [enable\_cloud\_guard](#input\_enable\_cloud\_guard) | true if you don't have cloud guard enabled, false if you've already have cloud guard enabled. | `bool` | n/a | yes |
 | <a name="input_enable_compartment_delete"></a> [enable\_compartment\_delete](#input\_enable\_compartment\_delete) | Set to true to allow the compartments to delete on terraform destroy. | `bool` | `true` | no |
+| <a name="input_enable_dmz"></a> [enable\_dmz](#input\_enable\_dmz) | Set to true to enable a compartment to host DMZ related services. | `bool` | `false` | no |
 | <a name="input_enable_fastconnect_on_environment"></a> [enable\_fastconnect\_on\_environment](#input\_enable\_fastconnect\_on\_environment) | n/a | `bool` | n/a | yes |
 | <a name="input_enable_internet_gateway_hub"></a> [enable\_internet\_gateway\_hub](#input\_enable\_internet\_gateway\_hub) | Option to enable true and Disable false. | `string` | n/a | yes |
 | <a name="input_enable_logging"></a> [enable\_logging](#input\_enable\_logging) | Set to true to enable logging compartment which stores the configuration information that landing zones is setting up for the customer. | `bool` | `false` | no |
@@ -67,6 +71,7 @@
 | <a name="input_enable_network_monitoring_alarms"></a> [enable\_network\_monitoring\_alarms](#input\_enable\_network\_monitoring\_alarms) | Enable Network Monitoring Alarms in Network Compartment | `bool` | n/a | yes |
 | <a name="input_enable_security_monitoring_alarms"></a> [enable\_security\_monitoring\_alarms](#input\_enable\_security\_monitoring\_alarms) | Enable Security Monitoring Alarms in Security Compartment | `bool` | n/a | yes |
 | <a name="input_enable_service_gateway_hub"></a> [enable\_service\_gateway\_hub](#input\_enable\_service\_gateway\_hub) | Option to enable true and Disable false. | `string` | n/a | yes |
+| <a name="input_enable_shared_tools"></a> [enable\_shared\_tools](#input\_enable\_shared\_tools) | Set to true to enable a management tools compartment which hosts few of the tools that are used to manage workloads across the environments. | `bool` | `false` | no |
 | <a name="input_enable_tagging"></a> [enable\_tagging](#input\_enable\_tagging) | Set to true to enable Tagging. | `bool` | `false` | no |
 | <a name="input_enable_tf_state_backup"></a> [enable\_tf\_state\_backup](#input\_enable\_tf\_state\_backup) | Set to true to enable logging compartment which contains the bucket for the log files. | `bool` | `false` | no |
 | <a name="input_enable_vault_replication"></a> [enable\_vault\_replication](#input\_enable\_vault\_replication) | Option to enable vault replication | `bool` | n/a | yes |
@@ -84,6 +89,7 @@
 | <a name="input_igw_hub_check"></a> [igw\_hub\_check](#input\_igw\_hub\_check) | n/a | `list(string)` | n/a | yes |
 | <a name="input_ipsec_connection_static_routes"></a> [ipsec\_connection\_static\_routes](#input\_ipsec\_connection\_static\_routes) | n/a | `list(string)` | n/a | yes |
 | <a name="input_ipsec_display_name"></a> [ipsec\_display\_name](#input\_ipsec\_display\_name) | n/a | `string` | n/a | yes |
+| <a name="input_is_baseline_deploy"></a> [is\_baseline\_deploy](#input\_is\_baseline\_deploy) | TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation. | `bool` | n/a | yes |
 | <a name="input_is_create_alarms"></a> [is\_create\_alarms](#input\_is\_create\_alarms) | Enable Alarms Creation in all Compartment | `bool` | n/a | yes |
 | <a name="input_is_service_connector_limit"></a> [is\_service\_connector\_limit](#input\_is\_service\_connector\_limit) | Restrict Number of Service Connector Deployment | `bool` | n/a | yes |
 | <a name="input_nat_gw_hub_check"></a> [nat\_gw\_hub\_check](#input\_nat\_gw\_hub\_check) | n/a | `list(string)` | n/a | yes |

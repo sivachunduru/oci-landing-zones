@@ -8,6 +8,9 @@ module "compartment" {
   environment_compartment_name = var.environment_compartment_name
   enable_tf_state_backup       = var.enable_tf_state_backup
   enable_logging               = var.enable_logging
+  is_baseline_deploy           = var.is_baseline_deploy
+  enable_shared_tools          = var.enable_shared_tools
+  enable_dmz                   = var.enable_dmz
 
   providers = {
     oci             = oci
@@ -21,6 +24,7 @@ module "identity" {
   region             = var.region
   environment_prefix = var.environment_prefix
 
+  home_compartment_id          = var.home_compartment_id
   environment_compartment_id   = module.compartment.compartments.environment.id
   environment_compartment_name = module.compartment.compartments.environment.name
   shared_compartment_id        = module.compartment.compartments.shared.id
@@ -37,6 +41,7 @@ module "identity" {
   platform_admin_group_name    = var.platform_admin_group_name
   ops_admin_group_name         = var.ops_admin_group_name
   workload_compartment_names   = var.workload_compartment_names
+  is_baseline_deploy           = var.is_baseline_deploy
 
   providers = {
     oci             = oci
@@ -58,6 +63,7 @@ module "budget" {
   region             = var.region
   environment_prefix = var.environment_prefix
 
+  home_compartment_id          = var.home_compartment_id
   budget_compartment_id        = var.tenancy_ocid
   budget_description           = local.budget.budget_description
   budget_display_name          = local.budget.budget_display_name
@@ -66,6 +72,7 @@ module "budget" {
   budget_alert_rule_threshold  = var.budget_alert_rule_threshold
   budget_alert_rule_message    = var.budget_alert_rule_message
   budget_alert_rule_recipients = var.budget_alert_rule_recipients
+  is_baseline_deploy           = var.is_baseline_deploy
 
   providers = {
     oci             = oci
@@ -89,6 +96,7 @@ module "security" {
   replica_region               = var.vault_replica_region
   enable_replication           = var.enable_vault_replication
   create_master_encryption_key = var.create_master_encryption_key
+  is_baseline_deploy           = var.is_baseline_deploy
 
   providers = {
     oci             = oci
@@ -108,6 +116,7 @@ module "network" {
   tenancy_ocid                = var.tenancy_ocid
   region                      = var.region
   environment_prefix          = var.environment_prefix
+  home_compartment_id         = var.home_compartment_id
   enable_internet_gateway_hub = var.enable_internet_gateway_hub
   enable_nat_gateway_hub      = var.enable_nat_gateway_hub
   enable_service_gateway_hub  = var.enable_service_gateway_hub
@@ -127,6 +136,7 @@ module "network" {
   enable_vpn_on_environment         = var.enable_vpn_on_environment
   enable_fastconnect_on_environment = var.enable_fastconnect_on_environment
   customer_onprem_ip_cidr           = var.customer_onprem_ip_cidr
+  is_baseline_deploy                = var.is_baseline_deploy
 
   additional_workload_subnets_cidr_blocks = var.additional_workload_subnets_cidr_blocks
 
@@ -141,6 +151,7 @@ module "tagging" {
   source = "../elz-tagging"
 
   region                       = var.region
+  home_compartment_id          = var.home_compartment_id
   environment_compartment_id   = module.compartment.compartments.environment.id
   environment_compartment_name = var.environment_compartment_name
   enable_tagging               = var.enable_tagging
@@ -148,6 +159,7 @@ module "tagging" {
   tenancy_ocid                 = var.tenancy_ocid
   cost_center_tagging          = var.cost_center_tagging
   geo_location_tagging         = var.geo_location_tagging
+  is_baseline_deploy           = var.is_baseline_deploy
 
   providers = {
     oci             = oci
@@ -158,10 +170,12 @@ module "tagging" {
 module "monitoring" {
   source = "../elz-monitoring"
 
-  tenancy_ocid       = var.tenancy_ocid
-  region             = var.region
-  environment_prefix = var.environment_prefix
-  resource_label     = var.resource_label
+  tenancy_ocid        = var.tenancy_ocid
+  region              = var.region
+  environment_prefix  = var.environment_prefix
+  resource_label      = var.resource_label
+  home_compartment_id = var.home_compartment_id
+  is_baseline_deploy  = var.is_baseline_deploy
 
   environment_compartment_id = module.compartment.compartments.environment.id
   security_compartment_id    = module.compartment.compartments.security.id

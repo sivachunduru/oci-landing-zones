@@ -13,6 +13,16 @@ variable "region" {
   description = "The OCI region"
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
+
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
 variable "workload_spoke_vcn_cidr" {
   description = "The list of IPv4 CIDR blocks the VCN will use."
   type        = string

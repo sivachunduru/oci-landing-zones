@@ -26,8 +26,9 @@ locals {
       "endorse group Administrators to read loganalytics-features-family in tenancy sampledata",
       "endorse group Administrators to read loganalytics-resources-family in tenancy sampledata",
       "endorse group Administrators to read compartments in tenancy sampledata",
-      "allow service loganalytics to READ loganalytics-features-family in tenancy",
+      "allow service loganalytics to manage loganalytics-features-family in tenancy",
       "allow service loganalytics to READ compartments in tenancy",
+      "allow service loganalytics to manage loganalytics-resources-family in tenancy"
     ]
   }
 }

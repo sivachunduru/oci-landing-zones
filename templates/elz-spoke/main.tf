@@ -140,19 +140,12 @@ module "workload_spoke_vcn" {
 module "workload_spoke_security_list" {
   source = "../../modules/security-list"
 
-  compartment_id                        = var.workload_compartment_id
-  vcn_id                                = module.workload_spoke_vcn.vcn_id
-  spoke_security_list_display_name      = var.security_list_display_name
-  security_list_egress_destination      = local.security_list_egress.destination
-  security_list_egress_protocol         = local.security_list_egress.protocol
-  security_list_egress_description      = local.security_list_egress.description
-  security_list_egress_destination_type = local.security_list_egress.destination_type
+  compartment_id             = var.workload_compartment_id
+  vcn_id                     = module.workload_spoke_vcn.vcn_id
+  security_list_display_name = var.security_list_display_name
 
-  security_list_ingress_protocol    = local.security_list_ingress.protocol
-  security_list_ingress_source      = local.security_list_ingress.source
-  security_list_ingress_description = local.security_list_ingress.description
-  security_list_ingress_source_type = local.security_list_ingress.source_type
-
+  egress_rules  = [local.security_list_egress]
+  ingress_rules = [local.security_list_ingress] # , local.security_list_ingress_ssh
 }
 ######################################################################
 #          Create Workload VCN Spoke Subnet                          #

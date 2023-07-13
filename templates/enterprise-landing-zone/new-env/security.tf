@@ -1,6 +1,6 @@
 locals {
   osms_dynamic_group_newenv = {
-    dynamic_group_name        = "${var.resource_label}-OCI-ELZ-P-DG"
+    dynamic_group_name        = "${var.resource_label}-OCI-ELZ-environmentprefix-DG"
     dynamic_group_description = "OCI ELZ Dynamic Group - newenvuction"
 
     general_matching_rule = <<EOT

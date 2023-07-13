@@ -1,3 +1,8 @@
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
 variable "environment_compartment_id" {
   type        = string
   description = "The OCID of the compartment."
@@ -6,6 +11,11 @@ variable "environment_compartment_id" {
 variable "environment_compartment_name" {
   type        = string
   description = "The OCID of the compartment."
+}
+
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
 }
 
 variable "cost_center_tagging" {

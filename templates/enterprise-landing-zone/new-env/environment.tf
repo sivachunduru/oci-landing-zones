@@ -26,6 +26,9 @@ module "newenv_environment" {
   ops_admin_group_name       = var.newenv_ops_admin_group_name
   security_admin_group_name  = var.newenv_security_admin_group_name
   workload_compartment_names = var.newenv_workload_compartment_names
+  is_baseline_deploy         = var.is_baseline_deploy
+  enable_shared_tools        = var.newenv_enable_shared_tools
+  enable_dmz                 = var.newenv_enable_dmz
 
   enable_budget                = var.newenv_enable_budget
   budget_amount                = var.newenv_budget_amount

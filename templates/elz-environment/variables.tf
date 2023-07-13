@@ -27,6 +27,10 @@ variable "workload_compartment_names" {
   description = "The names of the workload compartments to update policies for the Admin Groups"
 }
 
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
 # -----------------------------------------------------------------------------
 # Compartment Variables
 # -----------------------------------------------------------------------------
@@ -61,6 +65,18 @@ variable "enable_tf_state_backup" {
 variable "enable_logging" {
   type        = bool
   description = "Set to true to enable logging compartment which stores the configuration information that landing zones is setting up for the customer."
+  default     = false
+}
+
+variable "enable_shared_tools" {
+  type        = bool
+  description = "Set to true to enable a management tools compartment which hosts few of the tools that are used to manage workloads across the environments."
+  default     = false
+}
+
+variable "enable_dmz" {
+  type        = bool
+  description = "Set to true to enable a compartment to host DMZ related services."
   default     = false
 }
 

@@ -21,19 +21,28 @@ variable "resource_label" {
   description = "Prefix used to avoid naming conflict"
 }
 
+variable "home_compartment_id" {
+  type        = string
+  description = "the OCID of the compartment where the environment will be created. In general, this should be the Landing zone parent compartment."
+}
+
+variable "is_baseline_deploy" {
+  type        = bool
+  description = "TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation."
+}
 # -----------------------------------------------------------------------------
 # Common Variables
 # -----------------------------------------------------------------------------
 variable "environment_compartment_id" {
-  type        = string
+  type = string
 }
 
 variable "network_compartment_id" {
-  type        = string
+  type = string
 }
 
 variable "security_compartment_id" {
-  type        = string
+  type = string
 }
 
 # variable "workload_compartment_id" {

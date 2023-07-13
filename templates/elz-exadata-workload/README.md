@@ -4,28 +4,33 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_oci"></a> [oci](#requirement\_oci) | 4.122.0 |
+| <a name="requirement_oci"></a> [oci](#requirement\_oci) | 5.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_oci"></a> [oci](#provider\_oci) | 4.122.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_oci"></a> [oci](#provider\_oci) | 5.1.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_application_admin_group"></a> [application\_admin\_group](#module\_application\_admin\_group) | ../../modules/non-default-domain-group | n/a |
 | <a name="module_architecture_tag"></a> [architecture\_tag](#module\_architecture\_tag) | ../../modules/tag | n/a |
 | <a name="module_bastion"></a> [bastion](#module\_bastion) | ../../modules/bastion | n/a |
+| <a name="module_database_admin_group"></a> [database\_admin\_group](#module\_database\_admin\_group) | ../../modules/non-default-domain-group | n/a |
+| <a name="module_datasafe_admin_group"></a> [datasafe\_admin\_group](#module\_datasafe\_admin\_group) | ../../modules/non-default-domain-group | n/a |
 | <a name="module_datasafe_admin_policy"></a> [datasafe\_admin\_policy](#module\_datasafe\_admin\_policy) | ../../modules/policies | n/a |
+| <a name="module_datasafe_reports_group"></a> [datasafe\_reports\_group](#module\_datasafe\_reports\_group) | ../../modules/non-default-domain-group | n/a |
+| <a name="module_exadata_infra_admin_group"></a> [exadata\_infra\_admin\_group](#module\_exadata\_infra\_admin\_group) | ../../modules/non-default-domain-group | n/a |
 | <a name="module_exadata_workload_expansion_policy"></a> [exadata\_workload\_expansion\_policy](#module\_exadata\_workload\_expansion\_policy) | ../../modules/policies | n/a |
 | <a name="module_exadata_workload_expansion_sec_policy"></a> [exadata\_workload\_expansion\_sec\_policy](#module\_exadata\_workload\_expansion\_sec\_policy) | ../../modules/policies | n/a |
 | <a name="module_exadata_workload_expansion_spoke"></a> [exadata\_workload\_expansion\_spoke](#module\_exadata\_workload\_expansion\_spoke) | ../elz-exadata-spoke | n/a |
-| <a name="module_groups"></a> [groups](#module\_groups) | ../../modules/identity-domain-group | n/a |
 | <a name="module_osms_dynamic_group"></a> [osms\_dynamic\_group](#module\_osms\_dynamic\_group) | ../../modules/dynamic-group | n/a |
 | <a name="module_vcn_flow_log"></a> [vcn\_flow\_log](#module\_vcn\_flow\_log) | ../../modules/service-log | n/a |
+| <a name="module_workload_admin_group"></a> [workload\_admin\_group](#module\_workload\_admin\_group) | ../../modules/non-default-domain-group | n/a |
 | <a name="module_workload_compartment"></a> [workload\_compartment](#module\_workload\_compartment) | ../../modules/compartment | n/a |
 | <a name="module_workload_critical_topic"></a> [workload\_critical\_topic](#module\_workload\_critical\_topic) | ../../modules/notification-topic | n/a |
 | <a name="module_workload_warning_topic"></a> [workload\_warning\_topic](#module\_workload\_warning\_topic) | ../../modules/notification-topic | n/a |
@@ -35,7 +40,7 @@
 | Name | Type |
 |------|------|
 | [random_id.tag](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
-| [oci_identity_region_subscriptions.regions](https://registry.terraform.io/providers/oracle/oci/4.122.0/docs/data-sources/identity_region_subscriptions) | data source |
+| [oci_identity_region_subscriptions.regions](https://registry.terraform.io/providers/oracle/oci/5.1.0/docs/data-sources/identity_region_subscriptions) | data source |
 
 ## Inputs
 
@@ -70,9 +75,10 @@
 | <a name="input_hub_public_subnet_cidr_block"></a> [hub\_public\_subnet\_cidr\_block](#input\_hub\_public\_subnet\_cidr\_block) | n/a | `string` | `"10.1.1.0/24"` | no |
 | <a name="input_hub_vcn_cidr_block"></a> [hub\_vcn\_cidr\_block](#input\_hub\_vcn\_cidr\_block) | CIDR of Hub VCN. | `string` | n/a | yes |
 | <a name="input_hub_vcn_id"></a> [hub\_vcn\_id](#input\_hub\_vcn\_id) | OCID of Hub VCN. | `string` | n/a | yes |
-| <a name="input_identity_domain_id"></a> [identity\_domain\_id](#input\_identity\_domain\_id) | the ocid of identity domain | `string` | `"ocid1.domain."` | no |
 | <a name="input_identity_domain_name"></a> [identity\_domain\_name](#input\_identity\_domain\_name) | identity domain name | `string` | `""` | no |
+| <a name="input_identity_domain_url"></a> [identity\_domain\_url](#input\_identity\_domain\_url) | the url of identity domain | `string` | n/a | yes |
 | <a name="input_ipsec_connection_static_routes"></a> [ipsec\_connection\_static\_routes](#input\_ipsec\_connection\_static\_routes) | n/a | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
+| <a name="input_is_baseline_deploy"></a> [is\_baseline\_deploy](#input\_is\_baseline\_deploy) | TagNameSpace Optimization: Enable this flag to disable dependent module TagNameSpace Tag Creation. | `bool` | `false` | no |
 | <a name="input_is_create_alarms"></a> [is\_create\_alarms](#input\_is\_create\_alarms) | Enable Alarms Creation in all Compartment | `bool` | `true` | no |
 | <a name="input_nat_gateway_display_name"></a> [nat\_gateway\_display\_name](#input\_nat\_gateway\_display\_name) | (Updatable) Name of NAT Gateway. Does not have to be unique. | `string` | `"ngw"` | no |
 | <a name="input_nat_gw_spoke_check"></a> [nat\_gw\_spoke\_check](#input\_nat\_gw\_spoke\_check) | n/a | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |

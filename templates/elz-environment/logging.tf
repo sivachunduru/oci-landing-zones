@@ -13,8 +13,9 @@ module "logging" {
   retention_policy_duration_amount    = var.retention_policy_duration_amount
   retention_policy_duration_time_unit = var.retention_policy_duration_time_unit
   subnets_map                         = module.network.subnets
+  is_baseline_deploy                  = var.is_baseline_deploy
 
-  depends_on = [ module.network ]
+  depends_on = [module.network]
 
   providers = {
     oci             = oci

@@ -131,10 +131,37 @@ module "workload_compartment" {
   }
 }
 
-module "groups" {
-  source             = "../../modules/identity-domain-group"
-  identity_domain_id = var.identity_domain_id
-  group_names        = values(local.group_names)
+module "workload_admin_group" {
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.workload_admin_group_name
+}
+module "application_admin_group" {
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.application_admin_group_name
+}
+module "exadata_infra_admin_group" {
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.exadata_infra_admin_group_name
+}
+module "database_admin_group" {
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.database_admin_group_name
+}
+module "datasafe_admin_group" {
+  count              = var.enable_datasafe ? 1 : 0
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.datasafe_admin_group_name
+}
+module "datasafe_reports_group" {
+  count              = var.enable_datasafe ? 1 : 0
+  source             = "../../modules/non-default-domain-group"
+  idcs_endpoint      = var.identity_domain_url
+  group_display_name = local.group_names.datasafe_reports_group_name
 }
 
 module "exadata_workload_expansion_policy" {
